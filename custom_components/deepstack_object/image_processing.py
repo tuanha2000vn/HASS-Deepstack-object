@@ -98,6 +98,7 @@ DEFAULT_ROI = (
 )
 
 EVENT_OBJECT_DETECTED = "deepstack.object_detected"
+EVENT_OBJECT_SCANNED = "deepstack.object_scanned"
 BOX = "box"
 FILE = "file"
 OBJECT = "object"
@@ -397,7 +398,9 @@ class ObjectClassifyEntity(ImageProcessingEntity):
             if saved_image_path:
                 target_event_data[SAVED_FILE] = saved_image_path
             self.hass.bus.fire(EVENT_OBJECT_DETECTED, target_event_data)
-
+        
+        self.hass.bus.fire(EVENT_OBJECT_SCANNED, {"entity_id": self._name})
+        
     @property
     def camera_entity(self):
         """Return camera entity id from process pictures."""
